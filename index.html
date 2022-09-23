@@ -1,0 +1,34 @@
+<script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+<script src="./Vertex.js"></script>
+<script src="./Vec2D.js"></script>
+<script src="./MassPoint.js"></script>
+<script src="./ConstOnProgram.js"></script>
+<script src="./PhysicalConst.js"></script>
+
+<script>
+    // initially, call once
+    'use srict';
+    let scale = 0.01;
+    const mass = 10
+    const initialPositionVec = new Vec2D(0, 0);
+    const initialVelocityVec = new Vec2D(0, -50);
+    const recievedForceFunc = (positionVec, velocityVec) => {
+        return new Vec2D(0, GRAVITATIONAL_ACCELERATION * mass);
+    }
+    const massPoint = new MassPoint(mass, initialPositionVec, initialVelocityVec, recievedForceFunc);
+    massPoint.calc()
+    
+    function setup(){
+        frameRate(FRAME_RATE)
+        createCanvas(WIDTH_SIZE, HEIGHT_SIZE); //表示する領域を確保 
+    }
+
+    function draw() {
+        background(255,230,210); //背景描画
+        text("1[m]", 120, 90);
+        line(100, 100, 100 + 1 / scale, 100);
+        line(100, 90, 100, 110);
+        line(100 + 1 / scale, 90, 100 + 1 / scale, 110);
+        massPoint.drawMotion();
+    }
+</script>
